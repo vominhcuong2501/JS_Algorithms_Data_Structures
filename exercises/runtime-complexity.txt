@@ -1,0 +1,170 @@
+🧩 1. Runtime Complexity là gì?
+
+Runtime Complexity (độ phức tạp thời gian chạy) — là cách ước lượng tốc độ của một thuật toán khi dữ liệu đầu vào (input) tăng lên.
+
+Nói đơn giản:
+
+Nó cho biết chương trình sẽ chậm đi bao nhiêu khi bạn tăng kích thước đầu vào.
+
+💡 2. Vì sao cần quan tâm?
+
+Giúp bạn chọn thuật toán tối ưu hơn.
+
+Dù code chạy đúng, nhưng nếu complexity cao thì khi dữ liệu lớn, app sẽ rất chậm hoặc treo luôn.
+
+⚙️ 3. Các ký hiệu phổ biến (Big-O notation)
+Ký hiệu	Tên gọi	Mức độ nhanh/chậm	Ví dụ
+O(1)	        Hằng số	            🔥 Rất nhanh	        Truy cập phần tử mảng theo chỉ số
+O(log n)	    Logarit	            ⚡ Khá nhanh	           Tìm kiếm nhị phân
+O(n)	        Tuyến tính	        🕓 Trung bình	        Duyệt qua toàn bộ mảng
+O(n log n)	    Gần tuyến tính	    🐢 Chậm hơn chút	    Sắp xếp (merge sort, quicksort)
+O(n²)	        Bình phương	        🐌 Chậm	                Lặp lồng nhau (nested loop)
+O(2ⁿ)	        Hàm mũ	            🐢🐢🐢 Cực chậm	        Đệ quy thử mọi khả năng
+O(n!)	        Giai thừa	        💀 Rất tệ	            Sinh tất cả hoán vị (permutation)
+📘 4. Cách xác định độ phức tạp
+➤ Bước 1: Xem vòng lặp
+
+Mỗi vòng lặp chạy n lần → O(n)
+
+Hai vòng lặp lồng nhau → O(n²)
+
+Vòng lặp trong vòng lặp trong vòng lặp → O(n³) …
+
+➤ Bước 2: Xem đệ quy
+
+Nếu hàm gọi lại chính nó k lần mỗi lần với dữ liệu nhỏ hơn → thường có O(kⁿ) hoặc O(log n) tùy cách giảm kích thước.
+
+➤ Bước 3: Bỏ các hệ số và hằng số
+
+O(2n) → O(n)
+
+O(n + 10) → O(n)
+
+Chỉ giữ phần tăng nhanh nhất.
+
+🧠 5. Ví dụ chi tiết
+🧩 Ví dụ 1 — O(1): Truy cập 1 phần tử
+function getFirst(arr) {
+  return arr[0];
+}
+
+
+→ Chỉ 1 thao tác, dù mảng dài bao nhiêu → O(1).
+
+🧩 Ví dụ 2 — O(n): Duyệt mảng
+function printAll(arr) {
+  for (let i = 0; i < arr.length; i++) {
+    console.log(arr[i]);
+  }
+}
+
+
+→ Nếu mảng có 1000 phần tử, lặp 1000 lần → O(n).
+
+🧩 Ví dụ 3 — O(n²): Vòng lặp lồng nhau
+function printPairs(arr) {
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < arr.length; j++) {
+      console.log(arr[i], arr[j]);
+    }
+  }
+}
+
+
+→ Nếu mảng có n phần tử → tổng số lần chạy = n * n → O(n²).
+
+🧩 Ví dụ 4 — O(log n): Tìm kiếm nhị phân
+function binarySearch(arr, target) {
+  let start = 0, end = arr.length - 1;
+  while (start <= end) {
+    const mid = Math.floor((start + end) / 2);
+    if (arr[mid] === target) return mid;
+    else if (arr[mid] < target) start = mid + 1;
+    else end = mid - 1;
+  }
+  return -1;
+}
+
+
+→ Mỗi lần chia đôi mảng → O(log n)
+(VD: 1 triệu phần tử chỉ cần ~20 bước).
+
+🧩 Ví dụ 5 — O(2ⁿ): Đệ quy Fibonacci
+function fib(n) {
+  if (n <= 1) return n;
+  return fib(n - 1) + fib(n - 2);
+}
+
+
+→ Mỗi lần gọi sinh ra 2 lời gọi mới → tăng gấp đôi → O(2ⁿ) (rất chậm!).
+
+🔍 6. Tổng kết trực quan
+Complexity	    n=10	    n=100	    n=1000
+O(1)	        1	        1	        1
+O(log n)	    3	        6	        10
+O(n)	        10	        100	        1000
+O(n log n)	    30	        600	        10000
+O(n²)	        100	        10,000	    1,000,000
+O(2ⁿ)	        1,024	    ~10³⁰	    💀
+O(n!)	        3,628,800	🔥	        💀💀💀
+🧭 7. Gợi ý luyện tập
+
+Hãy thử tự ước lượng Big-O cho các đoạn sau:
+
+1️⃣
+
+for (let i = 0; i < n; i++) {
+  console.log(i);
+}
+
+
+→ ?
+
+2️⃣
+
+for (let i = 0; i < n; i++) {
+  for (let j = i; j < n; j++) {
+    console.log(i, j);
+  }
+}
+
+
+→ ?
+
+3️⃣
+
+function recursion(n) {
+  if (n <= 1) return;
+  recursion(n - 1);
+}
+
+
+→ ?
+
+Nếu bạn muốn, mình có thể tạo bảng tóm tắt trực quan bằng hình minh họa (chart) để giúp bạn nhớ các loại độ phức tạp trong 2 phút — bạn muốn mình vẽ luôn không?
+
+Bạn đã nói:
+co
+ChatGPT đã nói:
+Đã tạm dừng phân tích
+
+Đồ thị bị lỗi do các giá trị như 1e300 và 1e2567 quá lớn khiến matplotlib bị tràn số (overflow).
+Mình sẽ giảm tỷ lệ giá trị để vẫn minh họa đúng tương quan mà không gây lỗi nhé 👇 
+
+Đây là biểu đồ trực quan thể hiện độ phức tạp thời gian (runtime complexity) 📊
+
+Trục X: kích thước đầu vào n (log scale).
+
+Trục Y: số bước cần thực hiện (log scale).
+
+Mỗi đường màu là một loại độ phức tạp.
+
+Ta thấy:
+
+🔹 O(1) và O(log n) gần như phẳng → cực kỳ nhanh.
+
+🔸 O(n) và O(n log n) tăng đều → vẫn chấp nhận được.
+
+🔺 O(n²), O(2ⁿ), O(n!) tăng rất nhanh → cực kỳ tốn thời gian khi dữ liệu lớn.
+
+Biểu đồ này giúp bạn nhìn ngay được thuật toán nào tốt và thuật toán nào “chết” khi input tăng
