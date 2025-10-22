@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1 onClick="{handleClick}">JavaScript Arrays</h1>
+    <h2>The slice() Method</h2>
+
+    <p>slice() returns selected array elements as a new array:</p>
+
+    <p id="demo"></p>
+
+    <script>
+      const fruits = ["Banana", "Orange", "Lemon", "Apple", "Mango"];
+      const citrus = [
+        ...fruits.slice(0, 1),
+        8,
+        ...fruits.slice(1 + 1, fruits.length),
+      ];
+
+      document.getElementById("demo").innerHTML = citrus;
+    </script>
+  </body>
+</html>
